@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { Store } from 'src/app/store';
 
 @Component({
@@ -18,6 +18,9 @@ export class SongsListenedComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.listened$ = this.store.select('playlist');
+    this.listened$ = this.store.select('playlist').pipe(
+      filter((data: any) => data),
+      map((playlist: any[]) => playlist.filter((track) => track.listened))
+    ) as any;
   }
 }
