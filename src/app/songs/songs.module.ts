@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { SongsFavouritesComponent } from './components/songs-favourites/songs-favourites.component';
+import { SongsListComponent } from './components/songs-list/songs-list.component';
 import { SongsListenedComponent } from './components/songs-listened/songs-listened.component';
 import { SongsPlaylistComponent } from './components/songs-playlist/songs-playlist.component';
 
@@ -11,6 +12,7 @@ import { SongsPlaylistComponent } from './components/songs-playlist/songs-playli
     SongsFavouritesComponent,
     SongsPlaylistComponent,
     SongsListenedComponent,
+    SongsListComponent,
   ],
   imports: [CommonModule, HttpClientModule],
   exports: [

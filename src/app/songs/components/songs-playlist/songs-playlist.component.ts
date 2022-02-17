@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SongsService } from '@app/songs/services/songs.service';
+import { Song, SongsService } from '@app/songs/services/songs.service';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from 'src/app/store';
 
@@ -7,23 +7,25 @@ import { Store } from 'src/app/store';
   selector: 'songs-playlist',
   template: `
     <div class="songs">
-      <h1>Songs Playlist</h1>
-      <hr />
-      <div *ngFor="let song of playlist$ | async; let i = index">
-        {{ i }} {{ song.artist }} - {{ song.track }}
-      </div>
+      <songs-list [list]="playlist$ | async" (toggle)="onToggle($event)">
+        Playlist
+      </songs-list>
     </div>
   `,
 })
 export class SongsPlaylistComponent implements OnInit, OnDestroy {
-  playlist$!: Observable<any[]>;
+  playlist$!: Observable<Song[]>;
   subscription!: Subscription;
 
   constructor(private store: Store, private songsService: SongsService) {}
 
   ngOnInit(): void {
     this.playlist$ = this.store.select('playlist');
-    this.subscription = this.songsService.getPlaylists$.subscribe();
+    this.subscription = this.songsService.getPlaylist().subscribe();
+  }
+
+  onToggle(event: { [track: string]: Song }) {
+    this.songsService.toggle(event);
   }
 
   ngOnDestroy(): void {
