@@ -12,6 +12,6 @@ export class SongsService {
   constructor(private store: Store, private http: HttpClient) {}
 
   getPlaylists$ = this.http
-    .get(env.api)
+    .get(`${env.api}/playlist`)
     .pipe(tap((playlist) => this.store.set('playlist', playlist)));
 }
